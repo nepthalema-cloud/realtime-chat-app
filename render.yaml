@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: realtime-chat-server
+    runtime: node
+    plan: starter
+    region: oregon
+    buildCommand: npm install && npm run prisma:generate && npm run build:server
+    startCommand: npm run start:server
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CLIENT_URL
+        sync: false
