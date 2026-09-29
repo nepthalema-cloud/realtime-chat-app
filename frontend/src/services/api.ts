@@ -11,7 +11,15 @@ import {
   PaginatedMessagesResponse,
 } from "../types/chat";
 
-const API_BASE = import.meta.env.VITE_API_URL || "/api";
+const getApiBase = (): string => {
+  const rawUrl = (import.meta.env.VITE_API_URL || "").trim().replace(/\/+$/, "");
+
+  if (!rawUrl) return "/api";
+
+  return rawUrl.endsWith("/api") ? rawUrl : `${rawUrl}/api`;
+};
+
+const API_BASE = getApiBase();
 const TOKEN_KEY = "chat_auth_token";
 
 export class ApiClientError extends Error {
